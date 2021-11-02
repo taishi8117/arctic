@@ -1,5 +1,5 @@
 defaults: &defaults
-    parallelism: 1
+    parallelism: 4
     shell: /bin/bash --login
     steps:
     - checkout

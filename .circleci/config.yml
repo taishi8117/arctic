@@ -29,11 +29,12 @@ defaults: &defaults
         command: |
           echo $VERSION > "$CIRCLE_ARTIFACTS/version.txt"
           # Find the lines of the changelog between releases, escape double quotes, delete empty lines
-          sed -n '{ /------/= }' CHANGES.md \
-              | head -n 2 \
-              | xargs -n 2 bash -c 'sed -n "s/\"/\\\\\"/g;`expr $0 + 1`,`expr $1 - 2`p" CHANGES.md' \
-              | sed '/^$/d' \
-              > "$CIRCLE_ARTIFACTS/changes.md"
+          # Simply gets the current changes from top of changelog.
+          #sed -n '{ /------/= }' CHANGES.md \
+              #| head -n 2 \
+              #| xargs -n 2 bash -c 'sed -n "s/\"/\\\\\"/g;`expr $0 + 1`,`expr $1 - 2`p" CHANGES.md' \
+              #| sed '/^$/d' \
+              #> "$CIRCLE_ARTIFACTS/changes.md"
     - run:
         name: Install MongoDB
         command: |
@@ -41,7 +42,6 @@ defaults: &defaults
             # good article on how to install mongo, https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
 
             cat /etc/os-release
-            set -x
             wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
             sudo apt-get install gnupg
             wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
@@ -90,13 +90,8 @@ defaults: &defaults
          ls -la /bin | grep mongo
          which mongod
          #pip install -e .[prometheus,test]
-         #python -m ipykernel install --user --name=notebooker_kernel
-         #pip install -r ./notebooker/notebook_templates_example/notebook_requirements.txt
-         #mkdir test-results
-         #arctic tests added
          # travis build
          # python setup.py test --pytest-args=-v
-         #cp junit.xml test-results
          py.test -svvvvv --junitxml=test-results/junit.xml
          #bash <(curl -s https://codecov.io/bash) -c -F python
     - store_test_results:
@@ -175,9 +170,9 @@ workflows:
   build_all:
     jobs:
       # just build 3.6 its all we need right now
-      #- build_2_7
+      - build_2_7
       - build_3_6
-      #- build_3_7
+      - build_3_7
 
       # do not publish
       #- publish-github-release:

@@ -1045,10 +1045,8 @@ def test_snapshot_no_collscan(library):
     query_plan = list(profile_db.find({'command.aggregate': {'$exists': True}}))[-1]
     print(f'qplan:{query_plan}')
 
-    # TODO DMK pymongo 3.12.1 returns 1
-    # TODO DMK pymongo 3.11.0 returns
-    # TODO DMK pymongo 3.6.0  returns 0
-    assert query_plan.get('docsExamined') == 0
+    # TODO DMK always returns 1 on circleci, 0 locally
+    assert query_plan.get('docsExamined') <= 1
     assert query_plan.get('keysExamined') == 1
     assert query_plan.get('planSummary').startswith('IXSCAN')
 

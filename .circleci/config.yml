@@ -55,8 +55,9 @@ defaults: &defaults
        command: |
          virtualenv ci
          . ci/bin/activate
-         pip install pip python-dateutil pytz tzlocal pymongo numpy decorator enum34 lz4 mock mockextras pytest pytest-cov pytest-server-fixtures pytest-timeout pytest-xdist setuptools-git pytest black .[test]
+         pip install pip python-dateutil pytz tzlocal pymongo decorator enum34 lz4 mock mockextras pytest pytest-cov pytest-server-fixtures pytest-timeout pytest-xdist setuptools-git pytest black .[test]
          pip install pandas==0.22.0
+         pip install numpy==1.18.4
          python setup.py develop
     # Save dependency cache
     - save_cache:

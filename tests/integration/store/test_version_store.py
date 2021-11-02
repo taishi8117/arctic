@@ -1043,7 +1043,6 @@ def test_snapshot_no_collscan(library):
         library.snapshot('snap1')
 
     query_plan = list(profile_db.find({'command.aggregate': {'$exists': True}}))[-1]
-    print(f'qplan:{query_plan}')
 
     # TODO DMK old
     #assert query_plan.get('docsExamined') == 0

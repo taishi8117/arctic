@@ -122,6 +122,7 @@ jobs:
     working_directory: ~/arctic_2_73
     docker:
     - image: cimg/python:2.73-node
+    <<: *defaults
   build_3_6:
     environment:
       PYTHON_VERSION: "3_6"

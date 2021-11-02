@@ -89,11 +89,12 @@ defaults: &defaults
          #pip install -e .[prometheus,test]
          #python -m ipykernel install --user --name=notebooker_kernel
          #pip install -r ./notebooker/notebook_templates_example/notebook_requirements.txt
-         mkdir test-results
+         #mkdir test-results
          #arctic tests added
-         python setup.py test --pytest-args=-v
-         cp junit.xml test-results
-         #py.test -svvvvv --junitxml=test-results/junit.xml
+         # travis build
+         # python setup.py test --pytest-args=-v
+         #cp junit.xml test-results
+         py.test -svvvvv --junitxml=test-results/junit.xml
          #bash <(curl -s https://codecov.io/bash) -c -F python
     - store_test_results:
         path: test-results
@@ -110,6 +111,17 @@ defaults: &defaults
           - ./*/dist/*
 version: 2
 jobs:
+  build_2_73:
+    environment:
+      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts/2_73
+      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results/2_73
+      VERSION: 1.80.0
+      #PANDOC_RELEASES_URL: https://github.com/jgm/pandoc/releases
+      #YARN_STATIC_DIR: notebooker/web/static/
+      IMAGE_NAME: mangroup/arctic
+    working_directory: ~/arctic_2_73
+    docker:
+    - image: cimg/python:2.73-node
   build_3_6:
     environment:
       PYTHON_VERSION: "3_6"
@@ -146,26 +158,28 @@ jobs:
          command: |
            VERSION=$(cat /tmp/circleci-artifacts/3_6/version.txt)
            CHANGES=$(cat /tmp/circleci-artifacts/3_6/changes.md)
-  #         ghr -t ${GITHUB_TOKEN} \
-  #             -u ${CIRCLE_PROJECT_USERNAME} \
-  #             -r ${CIRCLE_PROJECT_REPONAME} \
-  #             -c ${CIRCLE_SHA1} \
-  #             -n ${VERSION} \
-  #             -b "${CHANGES}" \
-  #             -soft \
-  #             ${VERSION} /tmp/circleci-artifacts/3_6/dist
+           ghr -t ${GITHUB_TOKEN} \
+               -u ${CIRCLE_PROJECT_USERNAME} \
+               -r ${CIRCLE_PROJECT_REPONAME} \
+               -c ${CIRCLE_SHA1} \
+               -n ${VERSION} \
+               -b "${CHANGES}" \
+               -soft \
+               ${VERSION} /tmp/circleci-artifacts/3_6/dist
 workflows:
   version: 2
   build_all:
     jobs:
+      - build_2_73
       - build_3_6
       - build_3_7
-      - publish-github-release:
-          requires:
-            - build_3_6
-            - build_3_7
-          filters:
-            branches:
-              only:
-                - master
+      # do not publish
+      #- publish-github-release:
+      #    requires:
+      #      - build_3_6
+      #      - build_3_7
+      #    filters:
+      #      branches:
+      #        only:
+      #          - master
 

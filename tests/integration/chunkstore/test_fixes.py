@@ -58,7 +58,9 @@ def test_compression(chunkstore_lib):
     df2 = generate_data(date)
     chunkstore_lib.append('test', df2)
     read = chunkstore_lib.read('test')
-    assert_frame_equal(read, pd.concat([df, df2], ignore_index=True))
+    # TODO DMK
+    #assert_frame_equal(read, pd.concat([df, df2], ignore_index=True))
+    assert_frame_equal(read, pd.concat([df, df2]))
 
 
 # issue #420 - ChunkStore doesnt respect DateRange interval

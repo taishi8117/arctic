@@ -92,8 +92,7 @@ setup(
                    "pytest-server-fixtures",
                    "pytest-timeout",
                    "pytest-xdist<=1.26.1",
-                   "lz4",
-                   "pandas<=0.22.0"
+                   "lz4"
                   ],
     entry_points={'console_scripts': [
                                         'arctic_init_library = arctic.scripts.arctic_init_library:main',

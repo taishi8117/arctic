@@ -1045,7 +1045,7 @@ def test_snapshot_no_collscan(library):
     query_plan = list(profile_db.find({'command.aggregate': {'$exists': True}}))[-1]
 
     # TODO DMK depends on mongo version?
-    assert query_plan.get('docsExamined') <= 0
+    assert query_plan.get('docsExamined') <= 1
     assert query_plan.get('keysExamined') == 1
     assert not query_plan.get('planSummary').startswith('COLLSCAN')
     #assert query_plan.get('planSummary').startswith('IXSCAN')

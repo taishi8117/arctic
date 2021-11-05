@@ -55,13 +55,15 @@ defaults: &defaults
        command: |
          virtualenv ci
          . ci/bin/activate
-         pip install pip python-dateutil pytz tzlocal decorator enum34 mock mockextras pytest pytest-cov pytest-server-fixtures pytest-timeout pytest-xdist setuptools-git pytest black .[test]
+         pip install pip python-dateutil pytz tzlocal enum34 mock mockextras pytest pytest-cov pytest-server-fixtures pytest-timeout pytest-xdist setuptools-git pytest black .[test]
          pip install pandas==0.22.0
          pip install numpy==1.18.4
          pip install pymongo==3.6.0
          if [[ $PYTHON_VERSION == "2_7" ]]
          then pip install lz4==2.1.0
+              pip install decorator==4.1.2
          else pip install lz4
+              pip install decorator
          fi
          python setup.py develop
     # Save dependency cache

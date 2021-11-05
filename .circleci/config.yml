@@ -170,7 +170,7 @@ workflows:
   build_all:
     jobs:
       # just build 3.6 its all we need right now
-      #- build_2_7
+      - build_2_7
       - build_3_6
       - build_3_7
 

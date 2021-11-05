@@ -99,9 +99,12 @@ defaults: &defaults
          ls -la /bin | grep mongo
          which mongod
          #pip install -e .[prometheus,test]
-         # travis build
-         # python setup.py test --pytest-args=-v
-         py.test -svvvvv --junitxml=test-results/junit.xml
+
+         # travis build and test
+         if [[ $PYTHON_VERSION == "2_7" ]]
+         then python setup.py test --pytest-args=-v
+         else py.test -svvvvv --junitxml=test-results/junit.xml
+         fi
          #bash <(curl -s https://codecov.io/bash) -c -F python
     - store_test_results:
         path: test-results

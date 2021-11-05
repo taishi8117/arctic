@@ -58,6 +58,7 @@ defaults: &defaults
          pip install pip python-dateutil pytz enum34 pytest pytest-cov pytest-server-fixtures pytest-timeout pytest-xdist setuptools-git pytest black .[test]
          if [[ $PYTHON_VERSION == "2_7" ]]
          then 
+              # travis 0.22.0, 1.16.6, 3.11.3 respectively
               pip install pandas==0.22.0
               pip install numpy==1.14.2
               pip install pymongo==3.6.0
@@ -68,6 +69,7 @@ defaults: &defaults
               pip install mockextras==1.0.2
          elif [[ $PYTHON_VERSION == "3_6" ]]
          then 
+              # travis 1.1.5, 1.19.5, 3.11.3 respectively
               pip install pandas==0.22.0
               pip install numpy==1.18.4
               pip install pymongo==3.6.0
@@ -78,9 +80,11 @@ defaults: &defaults
               pip install mockextras
          elif [[ $PYTHON_VERSION == "3_7" ]]
          then 
-              pip install pandas
-              pip install numpy
-              pip install pymongo
+              # lets try highest versions that'll work
+              # travis 1.2.4, 1.20.2, 3.11.3 respectively
+              pip install pandas==1.0.3
+              pip install numpy==1.18.4
+              pip install pymongo==3.6.0
               pip install lz4
               pip install decorator
               pip install tzlocal

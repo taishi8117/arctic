@@ -104,8 +104,9 @@ defaults: &defaults
               #pip install numpy==1.18.4
               #pip install pymongo==3.6.0
 
-              pip install pandas
-              pip install numpy
+              # defaults by make numpy match default pandas
+              pip install pandas==1.0.3
+              pip install numpy==1.13.3
               pip install pymongo
               pip install lz4
               pip install decorator

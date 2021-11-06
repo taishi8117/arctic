@@ -99,11 +99,14 @@ defaults: &defaults
               #pip install pymongo==3.6.0
               #pip install pytest-xdist==1.26.1
 
-              # try 3.6 versions
-              pip install pandas==0.22.0
-              pip install numpy==1.18.4
-              pip install pymongo==3.6.0
+              # try 3.6 versions 14 fails
+              #pip install pandas==0.22.0
+              #pip install numpy==1.18.4
+              #pip install pymongo==3.6.0
 
+              pip install pandas
+              pip install numpy
+              pip install pymongo
               pip install lz4
               pip install decorator
               pip install tzlocal

@@ -205,7 +205,7 @@ workflows:
       # just build 3.6 its all we need right now
       - build_2_7
       - build_3_6
-      - build_3_7
+      #- build_3_7
 
       # do not publish
       #- publish-github-release:
